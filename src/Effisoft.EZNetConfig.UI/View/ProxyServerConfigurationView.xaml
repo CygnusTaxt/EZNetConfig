@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Effisoft.EZNetConfig.UI.View.ProxyServerConfigurationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding ProxyServerConfiguration, Source={StaticResource Locator}}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <cmd:EventToCommand Command="{Binding GetAllProxyConfCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Width="480" Height="323">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Proxy Configurations" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Grid.Row="0" Grid.Column="1" Content="Proxy Server Configuration" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ListBox x:Name="lstProxyConfiguration" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Width="120" ItemsSource="{Binding ProxyConfigurationList}"
+                 DisplayMemberPath="ProxyConfigurationName" IsEnabled="{Binding EnableControl}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <cmd:EventToCommand Command="{Binding ShowProxyConfigurationCommandd, Mode=OneWay}"
+                                        CommandParameter="{Binding ElementName=lstProxyConfiguration, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+        <Border Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+            <Grid Margin="0,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Row="1" Margin="0,5">
+                    <Label Content="Configuration Name" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Margin="5,3,3,3" IsEnabled="{Binding EnableControl}" Text="{Binding ProxyConfigurationItem.ProxyConfigurationName, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel Grid.Row="2" Margin="0,5">
+                    <Label Content="Address" HorizontalAlignment="Left" Margin="5,0" />
+                    <TextBox Margin="17,3,3,3" Text="{Binding ProxyConfigurationItem.ProxyAddress, Mode=TwoWay}" IsEnabled="{Binding EnableControl}" />
+                    <Label Content="Port" />
+                    <TextBox Width="40" Text="{Binding ProxyConfigurationItem.ProxyPort, Mode=TwoWay}" IsEnabled="{Binding EnableControl}" />
+                </DockPanel>
+                <DockPanel Grid.Row="3" Margin="0,5">
+                    <Label Content="Exceptions" Margin="5,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Margin="5,3,3,3" Text="{Binding ProxyConfigurationItem.ProxyExceptions, Mode=TwoWay}" IsEnabled="{Binding EnableControl}" />
+                </DockPanel>
+                <DockPanel Grid.Row="4" Margin="0,5">
+                    <Label Content="Do not use proxy for local addresses" Margin="5,0,0,0" />
+                    <CheckBox HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" IsChecked="{Binding ProxyConfigurationItem.UseProxyForLocalAddresses, Mode=TwoWay}" IsEnabled="{Binding EnableControl}" />
+                </DockPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Content="Save Proxy Conf" Command="{Binding SaveCommand}" IsEnabled="{Binding EnableControl}" />
+            <Button Grid.Column="1" Content="Apply Conf" Command="{Binding ApplyProxyConfCommand}" IsEnabled="{Binding EnableControl}" />
+            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Clear Proxy Configuration" Command="{Binding ClearProxyConfCommand}" IsEnabled="{Binding EnableControl}" />
+        </Grid>
+    </Grid>
+</UserControl>
