@@ -77,9 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\EParameterConfigurationType.cs" />
+    <Compile Include="Interfaces\ICurrentIPConfigurationService.cs" />
     <Compile Include="Interfaces\IDialogMessageService.cs" />
     <Compile Include="Interfaces\IIPConfigurationService.cs" />
     <Compile Include="Interfaces\IProxyConfigurationService.cs" />
+    <Compile Include="Model\ConfigurationCommunicator.cs" />
     <Compile Include="Model\IPConfiguration.cs" />
     <Compile Include="Model\IPConfigurationList.cs" />
     <Compile Include="Model\MessageCommunicator.cs" />
@@ -87,11 +89,13 @@
     <Compile Include="Model\ProxyConfiguration.cs" />
     <Compile Include="Model\ProxyConfigurationList.cs" />
     <Compile Include="SafeNativeMethods.cs" />
+    <Compile Include="Services\CurrentIPConfigurationService.cs" />
     <Compile Include="Services\DialogMessageService.cs" />
     <Compile Include="Services\IPConfigurationService.cs" />
     <Compile Include="Services\ProxyConfigurationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="ViewModel\CurrentConfigurationViewModel.cs" />
     <Compile Include="ViewModel\IPConfigurationViewModel.cs" />
     <Compile Include="ViewModel\ProxyServerConfigurationViewModel.cs" />
   </ItemGroup>

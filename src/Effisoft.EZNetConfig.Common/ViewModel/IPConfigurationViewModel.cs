@@ -279,6 +279,7 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
                     _dialogMessageService.ShowAsync("Error", ex.Message + ex.InnerException);
                     ReportProgress(new ProgressReport { ProgressMessage = "Ready", ProgressValue = 0 });
                 }
+                UpdatedConfiguration(true);
             }
 
             EnableControl = true;
@@ -340,14 +341,9 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
         /// </summary>
         public async void GetConnectedNetworkInterfaces()
         {
-            Task<List<NetworkInterface>> t1 = Task<List<NetworkInterface>>.Factory.StartNew(() =>
-                {
-                    return NetworkInterface.GetAllNetworkInterfaces().ToList(); ;
-                });
-
             StatusBarText = "Getting available Network Interfaces";
 
-            var availableInterfaces = await t1;
+            var availableInterfaces = await Tools.GetConnectedNetworkInterfacesAsync();
 
             availableInterfaces = availableInterfaces.Where(aInt => (aInt.NetworkInterfaceType == NetworkInterfaceType.Ethernet ||
                 aInt.NetworkInterfaceType == NetworkInterfaceType.Ethernet3Megabit || aInt.NetworkInterfaceType == NetworkInterfaceType.FastEthernetFx ||
@@ -389,6 +385,14 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
             {
                 ProgressReportFromView = value
             });
+        }
+
+        private void UpdatedConfiguration(bool isConfigChanged)
+        {
+            Messenger.Default.Send<ConfigurationCommunicator>(new ConfigurationCommunicator
+                {
+                    CurrentConfigurationChanged = isConfigChanged
+                });
         }
     }
 }

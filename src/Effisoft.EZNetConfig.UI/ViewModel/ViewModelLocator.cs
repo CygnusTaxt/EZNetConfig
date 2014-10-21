@@ -35,9 +35,11 @@ namespace Effisoft.EZNetConfig.UI.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<IPConfigurationViewModel>();
             SimpleIoc.Default.Register<ProxyServerConfigurationViewModel>();
+            SimpleIoc.Default.Register<CurrentConfigurationViewModel>();
             SimpleIoc.Default.Register<IIPConfigurationService, IPConfigurationService>();
             SimpleIoc.Default.Register<IDialogMessageService, DialogMessageService>();
             SimpleIoc.Default.Register<IProxyConfigurationService, ProxyConfigurationService>();
+            SimpleIoc.Default.Register<ICurrentIPConfigurationService, CurrentIPConfigurationService>();
         }
 
         /// <summary>
@@ -67,6 +69,14 @@ namespace Effisoft.EZNetConfig.UI.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ProxyServerConfigurationViewModel>();
+            }
+        }
+
+        public CurrentConfigurationViewModel CurrentConfiguration
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CurrentConfigurationViewModel>();
             }
         }
 

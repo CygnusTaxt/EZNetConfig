@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Effisoft.EZNetConfig.UI.View.CurrentConfiguration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding CurrentConfiguration, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <cmd:EventToCommand Command="{Binding GetCurrentIPInfoCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Width="230">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Current Configuration" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Label Grid.Row="1" Grid.Column="0" Content="IP Address:" />
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentIPConfiguration.IPAddress }" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Subnet Mask:" />
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentIPConfiguration.SubnetMask}" />
+        <Label Grid.Row="3" Grid.Column="0" Content="Gateway:" />
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding CurrentIPConfiguration.Gateway}" />
+        <Label Grid.Row="4" Grid.Column="0" Content="Primary DNS:" />
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding CurrentIPConfiguration.PreferredDNS}" />
+        <Label Grid.Row="5" Grid.Column="0" Content="Secondary DNS:" />
+        <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentIPConfiguration.SecondaryDNS}" />
+        <Label Grid.Row="6" Grid.Column="0" Content="DHCP:" />
+        <CheckBox x:Name="chkDHCP" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IPConfigurationItem.IsDHCP, Mode=TwoWay}" />
+        <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Current Proxy" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Label Grid.Row="8" Grid.Column="0" Content="Proxy Address:" />
+        <Label Grid.Row="8" Grid.Column="1" Content="{Binding CurrentProxyServer.ProxyAddress}" />
+        <Label Grid.Row="9" Grid.Column="0" Content="Proxy Port:" />
+        <Label Grid.Row="9" Grid.Column="1" Content="{Binding CurrentProxyServer.ProxyPort}" />
+    </Grid>
+</UserControl>

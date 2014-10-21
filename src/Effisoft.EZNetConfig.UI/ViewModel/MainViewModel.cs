@@ -37,6 +37,7 @@ namespace Effisoft.IPSwitcher.UI.ViewModel
                 RaisePropertyChanged(ProgressReportInfoPropertyName);
             }
         }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>

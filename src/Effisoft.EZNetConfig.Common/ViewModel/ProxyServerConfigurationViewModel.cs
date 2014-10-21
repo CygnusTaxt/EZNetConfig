@@ -160,6 +160,7 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
                 ProgressMessage = "Ready",
                 ProgressValue = 0
             });
+            UpdatedConfiguration(true);
             EnableControl = true;
         }
 
@@ -191,6 +192,14 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
                 });
         }
 
+        private void UpdatedConfiguration(bool isConfigChanged)
+        {
+            Messenger.Default.Send<ConfigurationCommunicator>(new ConfigurationCommunicator
+            {
+                CurrentConfigurationChanged = isConfigChanged
+            });
+        }
+
         private async void ApplyProxyConf()
         {
             EnableControl = false;
@@ -202,6 +211,7 @@ namespace Effisoft.EZNetConfig.Common.ViewModel
                     ProgressMessage = "Ready",
                     ProgressValue = 0
                 });
+            UpdatedConfiguration(true);
             EnableControl = true;
         }
 

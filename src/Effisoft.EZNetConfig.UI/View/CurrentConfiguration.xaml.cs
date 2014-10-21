@@ -6,12 +6,12 @@ namespace Effisoft.EZNetConfig.UI.View
     /// <summary>
     /// Description for CurrentIPConfiguration.
     /// </summary>
-    public partial class CurrentIPConfiguration : UserControl
+    public partial class CurrentConfiguration : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the CurrentIPConfiguration class.
         /// </summary>
-        public CurrentIPConfiguration()
+        public CurrentConfiguration()
         {
             InitializeComponent();
         }

@@ -1,6 +1,7 @@
 ﻿using Effisoft.EZNetConfig.Common.Enums;
 using Effisoft.EZNetConfig.Common.Model;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Effisoft.EZNetConfig.Common
             return cmdArguments.ToString();
         }
 
-        public static IPConfiguration GetCurrentInterfaceIPConfiguration(NetworkInterface netInterface)
+        public static IPConfiguration GetCurrentInterfaceIPConfiguration(NetworkInterface netInterface, bool getAllInfo = false)
         {
             IPConfiguration configuredIP = null;
 
@@ -91,10 +92,23 @@ namespace Effisoft.EZNetConfig.Common
             }
             else
             {
-                configuredIP = new IPConfiguration
+                if (getAllInfo)
                 {
-                    IsDHCP = currentIPV4Properties.IsDhcpEnabled
-                };
+                    configuredIP = new IPConfiguration()
+                    {
+                        IPAddress = ipV4Address.Address.ToString(),
+                        SubnetMask = ipV4Address.IPv4Mask.ToString(),
+                        Gateway = currentAdapterProperties.GatewayAddresses.FirstOrDefault().Address.ToString(),
+                        IsDHCP = currentIPV4Properties.IsDhcpEnabled
+                    };
+                }
+                else
+                {
+                    configuredIP = new IPConfiguration
+                    {
+                        IsDHCP = currentIPV4Properties.IsDhcpEnabled
+                    };
+                }
             }
 
             var IPV4Dns = currentAdapterProperties.DnsAddresses.ToList().Where(x => x.AddressFamily == AddressFamily.InterNetwork).ToList();
@@ -214,6 +228,24 @@ namespace Effisoft.EZNetConfig.Common
             {
                 serializer.Serialize(writer, objToSerialize);
             }
+        }
+
+        public static async Task<List<NetworkInterface>> GetConnectedNetworkInterfacesAsync()
+        {
+            Task<List<NetworkInterface>> t1 = Task<List<NetworkInterface>>.Factory.StartNew(() =>
+            {
+                return NetworkInterface.GetAllNetworkInterfaces().ToList(); ;
+            });
+
+            var availableInterfaces = await t1;
+
+            availableInterfaces = availableInterfaces.Where(aInt => (aInt.NetworkInterfaceType == NetworkInterfaceType.Ethernet ||
+                aInt.NetworkInterfaceType == NetworkInterfaceType.Ethernet3Megabit || aInt.NetworkInterfaceType == NetworkInterfaceType.FastEthernetFx ||
+                aInt.NetworkInterfaceType == NetworkInterfaceType.FastEthernetT || aInt.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet ||
+                aInt.NetworkInterfaceType == NetworkInterfaceType.Wireless80211) && aInt.OperationalStatus == OperationalStatus.Up &&
+                !(aInt.Description.ToUpper().Contains("VIRTUAL"))).ToList();
+
+            return availableInterfaces;
         }
     }
 }
