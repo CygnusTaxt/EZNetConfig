@@ -243,7 +243,7 @@ namespace Effisoft.EZNetConfig.Common
                 aInt.NetworkInterfaceType == NetworkInterfaceType.Ethernet3Megabit || aInt.NetworkInterfaceType == NetworkInterfaceType.FastEthernetFx ||
                 aInt.NetworkInterfaceType == NetworkInterfaceType.FastEthernetT || aInt.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet ||
                 aInt.NetworkInterfaceType == NetworkInterfaceType.Wireless80211) && aInt.OperationalStatus == OperationalStatus.Up &&
-                !(aInt.Description.ToUpper().Contains("VIRTUAL"))).ToList();
+                !(aInt.Description.ToUpper().Contains("VIRTUAL")) && aInt.GetIPProperties().GatewayAddresses.FirstOrDefault() != null).ToList();
 
             return availableInterfaces;
         }

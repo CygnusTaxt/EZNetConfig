@@ -42,7 +42,7 @@
         <Label Grid.Row="5" Grid.Column="0" Content="Secondary DNS:" />
         <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentIPConfiguration.SecondaryDNS}" />
         <Label Grid.Row="6" Grid.Column="0" Content="DHCP:" />
-        <CheckBox x:Name="chkDHCP" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IPConfigurationItem.IsDHCP, Mode=TwoWay}" />
+        <CheckBox x:Name="chkDHCP" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding CurrentIPConfiguration.IsDHCP, Mode=TwoWay}" />
         <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Current Proxy" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <Label Grid.Row="8" Grid.Column="0" Content="Proxy Address:" />
         <Label Grid.Row="8" Grid.Column="1" Content="{Binding CurrentProxyServer.ProxyAddress}" />

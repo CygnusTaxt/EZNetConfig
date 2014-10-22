@@ -20,7 +20,7 @@ namespace Effisoft.EZNetConfig.Common.Services
         public async Task<IPConfiguration> GetCurrentIPConfigurationAsync()
         {
             var availableInterfaces = await Tools.GetConnectedNetworkInterfacesAsync();
-            return Tools.GetCurrentInterfaceIPConfiguration(availableInterfaces.FirstOrDefault());
+            return Tools.GetCurrentInterfaceIPConfiguration(availableInterfaces.FirstOrDefault(), true);
         }
 
         public async Task<ProxyConfiguration> GetCurrentProxyConfiguration()
